@@ -1,5 +1,4 @@
 use crate::chess::board::Board;
-
 mod board;
 
 pub struct ChessGame {
@@ -19,4 +18,3 @@ impl ChessGame {
         &self.board
     }
 }
-
