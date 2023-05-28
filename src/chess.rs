@@ -1,12 +1,12 @@
 use crate::chess::board::Board;
 mod board;
 
-struct ChessGame {
+pub(crate) struct Game {
     board: Board
 }
 
-impl ChessGame {
-    fn new() -> Self {
+impl Game {
+    pub(crate) fn new() -> Self {
         Self { board: Board::new() }
     }
 

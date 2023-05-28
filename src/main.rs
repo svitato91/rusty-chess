@@ -30,13 +30,14 @@
 #![allow(clippy::redundant_pub_crate)]
 #![allow(clippy::separated_literal_suffix)]
 
-use actix_web::{App, HttpResponse, HttpServer, web};
+use actix_web::{App, HttpServer};
 use std::env;
 use std::io::ErrorKind;
 use actix_session::config::CookieContentSecurity::Private;
-use actix_session::{Session, SessionMiddleware};
+use actix_session::SessionMiddleware;
 use actix_session::storage::CookieSessionStore;
 use actix_web::cookie::Key;
+use actix_web::web::Data;
 use crate::errors::Error;
 use crate::players::Players;
 use crate::rest::users::user_config;
@@ -53,14 +54,20 @@ async fn main() -> std::io::Result<()> {
     env_logger::init();
 
     // Players data
-    let players = web::Data::new(Players::new());
+    let players = Data::new(Players::new());
 
+    // Games data
+    let games = Data::new(games::Games::new());
+
+    // Session secret key
     let key = secret_key
         .map_err(|e|
             std::io::Error::new(
                 ErrorKind::Other,
                 format!("Secret key not set up: {e:?}")
         ))?;
+
+    // Start server
     HttpServer::new(move || {
         App::new()
             .wrap(
@@ -71,7 +78,8 @@ async fn main() -> std::io::Result<()> {
                     .cookie_content_security(Private)
                     .build()
             )
-            .app_data(players.clone())
+            .app_data(Data::clone(&players))
+            .app_data(Data::clone(&games))
             .configure(user_config)
     })
         .bind(("0.0.0.0", 8080))?
@@ -84,5 +92,3 @@ fn get_secret_key() -> Result<Key, Error> {
         .map_err(Error::Env)?;
     Ok(Key::from(string.as_bytes()))
 }
-
-
