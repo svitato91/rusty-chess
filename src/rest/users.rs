@@ -1,5 +1,5 @@
 use actix_session::Session;
-use actix_web::{get, HttpResponse, Responder, web};
+use actix_web::{get, HttpResponse, web};
 use crate::add_player;
 use crate::players::Players;
 
@@ -13,6 +13,8 @@ pub(crate) fn user_config(cfg: &mut web::ServiceConfig) {
 }
 
 #[get("/me")]
+#[allow(clippy::unused_async)]
+#[allow(clippy::future_not_send)]
 async fn me(session: Session, data: web::Data<Players>) -> HttpResponse {
     let players = data.get_ref();
     let session_id = session.get::<u64>("id");
@@ -20,21 +22,29 @@ async fn me(session: Session, data: web::Data<Players>) -> HttpResponse {
         Ok(Some(id)) => if players.contains(id) {
             HttpResponse::Ok().body(format!("User id: {id}"))
         } else {
-            add_player(session, players)
+            add_player(&session, players)
         },
-        Ok(None) => add_player(session, players),
+        Ok(None) => add_player(&session, players),
         Err(e) => HttpResponse::InternalServerError().
             body(format!("Failed to set user id {e}"))
     }
 }
 
 #[get("/online")]
+#[allow(clippy::unused_async)]
+#[allow(clippy::future_not_send)]
 async fn online(data: web::Data<Players>) -> HttpResponse {
     HttpResponse::Ok().json(data.get_ref().player_list())
 }
 
 #[get("/rename/{name}")]
-async fn rename(session: Session, data: web::Data<Players>, name: web::Path<String>) -> impl Responder {
+#[allow(clippy::unused_async)]
+#[allow(clippy::future_not_send)]
+async fn rename(
+    session: Session,
+    data: web::Data<Players>,
+    name: web::Path<String>
+) -> HttpResponse {
     let players = data.get_ref();
     let session_id = session.get::<u64>("id");
     match session_id {
@@ -42,7 +52,7 @@ async fn rename(session: Session, data: web::Data<Players>, name: web::Path<Stri
             match players.rename(id, name.into_inner()) {
                 Ok(_) => HttpResponse::Ok().body("Name updated"),
                 Err(e) => HttpResponse::InternalServerError().body(
-                    format!("Failed to update name: {:?}", e)
+                    format!("Failed to update name: {e:?}")
                 )
             }
         } else {

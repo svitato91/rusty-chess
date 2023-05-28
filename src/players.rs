@@ -20,7 +20,7 @@ impl Players {
             let id = rand::thread_rng().gen::<u64>();
             let mut players = self.players.write().unwrap();
             if let Entry::Vacant(e) = players.entry(id) {
-                e.insert(Player::new(&id));
+                e.insert(Player::new(id));
                 break id;
             }
         }
@@ -36,14 +36,16 @@ impl Players {
         players.contains_key(&id)
     }
 
+    #[allow(clippy::significant_drop_tightening)]
     pub(crate) fn rename(&self, id: u64, name: String) -> Result<(), Error> {
-        let mut players = self.players.write().unwrap();
-        match players.get_mut(&id) {
+        let mut guard = self.players.write().unwrap();
+        let  player = guard.get_mut(&id);
+        match player {
             Some(player) => {
                 player.update_name(name)?;
                 Ok(())
             }
-            None => Err(Error::Internal(format!("Player not found: {}", id)))
+            None => Err(Error::Internal(format!("Player not found: {id}")))
         }
     }
 }
@@ -55,9 +57,9 @@ struct Player {
 }
 
 impl Player {
-    fn new(id: &u64) -> Self {
+    fn new(id: u64) -> Self {
         Self {
-            name: format!("{}", id),
+            name: format!("{id}"),
             games: Vec::new(),
         }
     }
@@ -68,7 +70,7 @@ impl Player {
             self.name = name;
             Ok(())
         } else {
-            Err(Error::Internal(format!("Invalid name: {}", name)))
+            Err(Error::Internal(format!("Invalid name: {name}")))
         }
     }
 }

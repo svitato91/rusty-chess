@@ -1,23 +1,23 @@
 use serde::Serialize;
 
 #[derive(Serialize)]
-pub struct Piece {
-    piece: PieceType,
-    color: PieceColor,
+pub(crate) struct Piece {
+    piece: Type,
+    color: Color,
 }
 
 impl Piece {
-    pub fn new(piece: PieceType, color: PieceColor) -> Self {
+    pub(crate) const fn new(piece: Type, color: Color) -> Self {
         Self { piece, color }
     }
 
-    pub fn to_str(&self) -> String {
+    pub(crate) fn to_str(&self) -> String {
         self.color.to_str(&self.piece)
     }
 }
 
 #[derive(Serialize)]
-pub enum PieceType {
+pub(crate) enum Type {
     Pawn,
     Rook,
     Knight,
@@ -26,32 +26,32 @@ pub enum PieceType {
     King,
 }
 
-impl PieceType {
-    fn to_char(&self) -> char {
+impl Type {
+    const fn to_char(&self) -> char {
         match self {
-            PieceType::Pawn => 'p',
-            PieceType::Rook => 'r',
-            PieceType::Knight => 'n',
-            PieceType::Bishop => 'b',
-            PieceType::Queen => 'q',
-            PieceType::King => 'k',
+            Self::Pawn => 'p',
+            Self::Rook => 'r',
+            Self::Knight => 'n',
+            Self::Bishop => 'b',
+            Self::Queen => 'q',
+            Self::King => 'k',
         }
     }
 }
 
 #[derive(Serialize)]
-pub enum PieceColor {
+pub(crate) enum Color {
     White,
     Black,
 }
 
-impl PieceColor {
-    fn to_str(&self, piece_type: &PieceType) -> String {
+impl Color {
+    fn to_str(&self, piece_type: &Type) -> String {
         match self {
             // White font on black background
-            PieceColor::White => format!("\x1b[97m\x1b[40m{}\x1b[0m", piece_type.to_char()),
+            Self::White => format!("\x1b[97m\x1b[40m{}\x1b[0m", piece_type.to_char()),
             // Black font on white background
-            PieceColor::Black => format!("\x1b[90m\x1b[107m{}\x1b[0m", piece_type.to_char()),
+            Self::Black => format!("\x1b[90m\x1b[107m{}\x1b[0m", piece_type.to_char()),
         }
     }
 }
