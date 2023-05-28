@@ -1,6 +1,5 @@
 use actix_session::Session;
 use actix_web::{get, HttpResponse, web};
-use crate::add_player;
 use crate::players::Players;
 
 pub(crate) fn user_config(cfg: &mut web::ServiceConfig) {
@@ -27,6 +26,13 @@ async fn me(session: Session, data: web::Data<Players>) -> HttpResponse {
         Ok(None) => add_player(&session, players),
         Err(e) => HttpResponse::InternalServerError().
             body(format!("Failed to set user id {e}"))
+    }
+}
+
+fn add_player(session: &Session, players: &Players) -> HttpResponse {
+    match session.insert("id", players.new_player()) {
+        Ok(_) => HttpResponse::Ok().body("User id set"),
+        Err(_) => HttpResponse::InternalServerError().body("Failed to set user id")
     }
 }
 

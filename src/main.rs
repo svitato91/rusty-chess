@@ -86,9 +86,3 @@ fn get_secret_key() -> Result<Key, Error> {
 }
 
 
-fn add_player(session: &Session, players: &Players) -> HttpResponse {
-    match session.insert("id", players.new_player()) {
-        Ok(_) => HttpResponse::Ok().body("User id set"),
-        Err(_) => HttpResponse::InternalServerError().body("Failed to set user id")
-    }
-}
