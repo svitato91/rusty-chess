@@ -30,7 +30,7 @@ async fn me(session: Session, data: web::Data<Players>) -> HttpResponse {
 }
 
 fn add_player(session: &Session, players: &Players) -> HttpResponse {
-    match session.insert("id", players.new_player()) {
+    match session.insert("id", players.new_player().unwrap()) {
         Ok(_) => HttpResponse::Ok().body("User id set"),
         Err(_) => HttpResponse::InternalServerError().body("Failed to set user id")
     }

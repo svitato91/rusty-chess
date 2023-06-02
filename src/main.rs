@@ -33,11 +33,14 @@
 use actix_web::{App, HttpServer};
 use std::env;
 use std::io::ErrorKind;
+use std::time::Duration;
+use actix_rt::time;
 use actix_session::config::CookieContentSecurity::Private;
 use actix_session::SessionMiddleware;
 use actix_session::storage::CookieSessionStore;
 use actix_web::cookie::Key;
 use actix_web::web::Data;
+use log::{debug, info};
 use crate::errors::Error;
 use crate::players::Players;
 use crate::rest::users::user_config;
@@ -50,22 +53,34 @@ mod rest;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    let secret_key = get_secret_key();
+    if env::var("RUST_LOG").is_err() {
+        env::set_var("RUST_LOG", "debug");
+    }
     env_logger::init();
 
-    // Players data
-    let players = Data::new(Players::new());
-
-    // Games data
-    let games = Data::new(games::Games::new());
-
-    // Session secret key
-    let key = secret_key
+    debug!("Loading secret key");
+    let key = get_secret_key()
         .map_err(|e|
             std::io::Error::new(
                 ErrorKind::Other,
                 format!("Secret key not set up: {e:?}")
-        ))?;
+            ))?;
+
+    debug!("Initializing data");
+    // Players data
+    let players = Data::new(Players::new());
+    // Games data
+    let games = Data::new(games::Games::new());
+
+    info!("Starting cleanup routines");
+    let players_clone = players.clone();
+    actix_rt::spawn(async move {
+        let mut interval = time::interval(Duration::from_secs(1));
+        loop {
+            interval.tick().await;
+            players_clone.get_ref().cleanup();
+        }
+    });
 
     // Start server
     HttpServer::new(move || {
