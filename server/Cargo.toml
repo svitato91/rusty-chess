@@ -1,0 +1,20 @@
+[package]
+name = "rusty-chess-server"
+version = "0.0.1"
+edition = "2021"
+authors = ["svitato91"]
+license-file = "../LICENSE"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+axum = { version = "0.7", features = ["ws"] }
+env_logger = "0.11"
+dashmap = "5"
+log = "0.4"
+rand = "0.8"
+serde = { workspace = true, features = ["derive"] }
+shared = { path = "../shared" }
+thiserror = "1"
+tokio = { version = "1", features = ["full"] }
+

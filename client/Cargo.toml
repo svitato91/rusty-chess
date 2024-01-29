@@ -1,0 +1,15 @@
+[package]
+name = "rusty-chess"
+version = "0.0.1"
+edition = "2021"
+authors = ["svitato91"]
+license-file = "../LICENSE"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+bevy = "0.12"
+thiserror = "1"
+tungstenite = "0.21"
+shared = { path = "../shared" }
+serde = { workspace = true, features = ["derive"] }
