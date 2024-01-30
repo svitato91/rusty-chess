@@ -1,6 +1,6 @@
 use std::sync::Arc;
 
-use axum::extract::WebSocketUpgrade;
+use axum::extract::{State, WebSocketUpgrade};
 use axum::response::Response;
 use axum::Router;
 use axum::routing::get;
@@ -30,6 +30,12 @@ async fn main() -> Result<()> {
     Ok(())
 }
 
-async fn handler(ws: WebSocketUpgrade) -> Response {
-    ws.on_upgrade(handle_connection)
+async fn handler(
+    ws: WebSocketUpgrade,
+    State(state): State<Arc<AppState>>,
+) -> Response {
+    ws.on_upgrade(move |socket| {
+        let state = state.clone();
+        handle_connection(state, socket)
+    })
 }

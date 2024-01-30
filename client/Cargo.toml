@@ -9,7 +9,8 @@ license-file = "../LICENSE"
 
 [dependencies]
 bevy = "0.12"
+futures = { version = "0.3", features = ["executor"] }
 thiserror = "1"
-tungstenite = "0.21"
+async-tungstenite = { version = "0.24", features = ["async-std-runtime"] }
 shared = { path = "../shared" }
 serde = { workspace = true, features = ["derive"] }
