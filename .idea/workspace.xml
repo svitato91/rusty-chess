@@ -7,14 +7,13 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82cc94be-b7f7-4061-8037-4987daf8667a" name="Changes" comment="Fully remodeled the project, will use bevy as client (both web and app) and an axum server as back-end">
+    <list default="true" id="82cc94be-b7f7-4061-8037-4987daf8667a" name="Changes" comment="Implemented simple connection between server and client, will be developed into a full game communication">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/client/Cargo.toml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/connection.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/connection.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/error.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/error.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/connection.rs" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/connection.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,27 +55,27 @@
     <option name="showMembers" value="true" />
     <option name="showModules" value="false" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Cargo.Bevy.executor": "Run",
-    "Cargo.Run chess.executor": "Run",
-    "Cargo.Run rusty-chess.executor": "Run",
-    "Cargo.Server.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "com.maddyhome.idea.vim.ui.VimEmulationConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Cargo.Bevy.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Run chess.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Run rusty-chess.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Server.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;org.rust.cargo.project.model.PROJECT_DISCOVERY&quot;: &quot;true&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.maddyhome.idea.vim.ui.VimEmulationConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\UTENTE\RustroverProjects\rusty-chess\client\src" />
@@ -182,7 +181,9 @@
       <workItem from="1706431908675" duration="11100000" />
       <workItem from="1706563656442" duration="1588000" />
       <workItem from="1706641727260" duration="5866000" />
-      <workItem from="1706647683049" duration="2440000" />
+      <workItem from="1706647683049" duration="3125000" />
+      <workItem from="1706734979983" duration="1725000" />
+      <workItem from="1706736731207" duration="1715000" />
     </task>
     <task id="LOCAL-00001" summary="Fully remodeled the project, will use bevy as client (both web and app) and an axum server as back-end">
       <option name="closed" value="true" />
@@ -192,7 +193,15 @@
       <option name="project" value="LOCAL" />
       <updated>1706565238172</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Implemented simple connection between server and client, will be developed into a full game communication">
+      <option name="closed" value="true" />
+      <created>1706650660594</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1706650660594</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -211,6 +220,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Fully remodeled the project, will use bevy as client (both web and app) and an axum server as back-end" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fully remodeled the project, will use bevy as client (both web and app) and an axum server as back-end" />
+    <MESSAGE value="Implemented simple connection between server and client, will be developed into a full game communication" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented simple connection between server and client, will be developed into a full game communication" />
   </component>
 </project>

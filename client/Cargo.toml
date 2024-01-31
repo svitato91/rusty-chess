@@ -9,7 +9,9 @@ license-file = "../LICENSE"
 
 [dependencies]
 bevy = "0.12"
+bevy_framepace = "0.14"
 futures = { version = "0.3", features = ["executor"] }
+futures-timer = "3"
 thiserror = "1"
 async-tungstenite = { version = "0.24", features = ["async-std-runtime"] }
 shared = { path = "../shared" }

@@ -1,9 +1,12 @@
 use std::sync::mpsc::channel;
 use std::thread;
+use bevy::diagnostic::FrameTimeDiagnosticsPlugin;
+
 use bevy::log::LogPlugin;
 use bevy::prelude::*;
 use bevy::sprite::MaterialMesh2dBundle;
 use bevy::window::{PresentMode, WindowResized};
+
 use crate::board::build_board;
 use crate::connection::handle_connection;
 
@@ -15,8 +18,9 @@ mod connection;
 mod error;
 
 fn main() {
-    App::new()
-        .add_plugins(DefaultPlugins.set(WindowPlugin {
+    let mut app = App::new();
+
+    app.add_plugins(DefaultPlugins.set(WindowPlugin {
             primary_window: Some(Window {
                 present_mode: PresentMode::AutoNoVsync, // Reduces input lag.
                 fit_canvas_to_parent: true,
@@ -27,9 +31,18 @@ fn main() {
             filter: "info,naga=warn,wgpu=error,rusty_chess=debug".into(),
             level: bevy::log::Level::DEBUG,
         }))
+        .add_plugins(FrameTimeDiagnosticsPlugin::default())
+        .add_plugins(bevy_framepace::FramepacePlugin)
         .add_systems(Startup, setup)
-        .add_systems(Update, on_resize)
-        .run();
+        .add_systems(Update, on_resize);
+
+    #[cfg(debug_assertions)]
+    {
+        use bevy::diagnostic::LogDiagnosticsPlugin;
+        app.add_plugins(LogDiagnosticsPlugin::default());
+    }
+
+    app.run();
 }
 
 fn setup(

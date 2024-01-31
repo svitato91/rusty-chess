@@ -1,53 +1,55 @@
 use std::sync::mpsc::Sender;
-use std::thread;
+use std::{future, thread};
 use std::time::Duration;
 
 use bevy::log::{error, info};
 use bevy::prelude::*;
-use bevy::tasks::AsyncComputeTaskPool;
+use bevy::tasks::{AsyncComputeTaskPool, block_on};
 use futures::{executor, SinkExt, StreamExt};
-use futures::executor::LocalPool;
 use futures::task::SpawnExt;
 use async_tungstenite::async_std::connect_async;
 use async_tungstenite::tungstenite::Message;
+use futures::future::Either;
+use futures_timer::Delay;
 
 pub(super) fn handle_connection(sender: Sender<GameStatus>) {
     let thread_pool = AsyncComputeTaskPool::get();
+    if let Err(err) = sender.send(GameStatus::Init) {
+        // Todo handle the shutdown
+    }
     loop {
         info!("Connecting...");
         let connection = executor::block_on(thread_pool.spawn(connect_async("ws://localhost:2564/socket")));
         match connection {
             Ok((stream, _)) => {
                 let (mut write, mut read) = stream.split();
-                let mut pool = LocalPool::new();
-                let spawner = pool.spawner();
 
-                if let Err(err) = spawner.spawn(async move {
+                let read_task = thread_pool.spawn(async move {
+                    info!("Starting read routine...");
                     while let Some(message) = read.next().await {
                         info!("{message:?}");
                     }
                     info!("Closed read socket");
-                }) {
-                    error!("Spawning read routine error: {err}");
-                    continue;
-                }
-                if let Err(err) = spawner.spawn(async move {
+                });
+                let write_task = thread_pool.spawn(async move {
                     loop {
                         info!("Sending ping...");
                         if let Err(err) = write.send(Message::Ping(vec![123])).await {
                             error!("Error sending message: {err}");
                             break;
                         }
-                        thread::sleep(Duration::from_secs(5));
+                        Delay::new(Duration::from_secs(5)).await;
                     }
-                }) {
-                    error!("Spawning write routine error: {err}");
-                    continue;
+                });
+
+                let any_task = thread_pool.spawn(futures::future::select(read_task, write_task));
+                match block_on(any_task) {
+                    Either::Left((_, task)) => { block_on(task.cancel()); }
+                    Either::Right((_, task)) => { block_on(task.cancel()); }
                 }
-                pool.run();
                 warn!("Connection lost...");
             }
-            Err(error) => error!("Connection error {error}"),
+            Err(err) => error!("Connection error {err}"),
         }
     }
 }
