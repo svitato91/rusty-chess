@@ -9,11 +9,6 @@
   <component name="ChangeListManager">
     <list default="true" id="82cc94be-b7f7-4061-8037-4987daf8667a" name="Changes" comment="Implemented simple connection between server and client, will be developed into a full game communication">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/client/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/connection.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/connection.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/connection.rs" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/connection.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +20,7 @@
       <option value="directory" />
     </option>
   </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="RsBuildProfile:dev" />
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -35,6 +31,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;svitato91&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/svitato91/rusty-chess.git&quot;,
+    &quot;accountId&quot;: &quot;8d3300cc-f932-41b5-b740-c710bdd84a75&quot;
+  }
+}</component>
   <component name="MacroExpansionManager">
     <option name="directoryName" value="vav9u9at" />
   </component>
@@ -63,6 +71,8 @@
     &quot;Cargo.Server.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.rust.reset.selective.auto.import&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -72,7 +82,7 @@
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;org.rust.cargo.project.model.PROJECT_DISCOVERY&quot;: &quot;true&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.maddyhome.idea.vim.ui.VimEmulationConfigurable&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;language.rust&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -155,10 +165,10 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Cargo.Server" />
       <item itemvalue="Cargo.Bevy - web" />
       <item itemvalue="Cargo.Bevy" />
       <item itemvalue="Cargo.Run rusty-chess" />
+      <item itemvalue="Cargo.Server" />
     </list>
     <recent_temporary>
       <list>
@@ -167,7 +177,7 @@
     </recent_temporary>
   </component>
   <component name="RustProjectSettings">
-    <option name="toolchainHomeDirectory" value="$USER_HOME$/.cargo/bin" />
+    <option name="toolchainHomeDirectory" value="/run/current-system/sw/bin" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -184,6 +194,8 @@
       <workItem from="1706647683049" duration="3125000" />
       <workItem from="1706734979983" duration="1725000" />
       <workItem from="1706736731207" duration="1715000" />
+      <workItem from="1744182824706" duration="37000" />
+      <workItem from="1744182866710" duration="31000" />
     </task>
     <task id="LOCAL-00001" summary="Fully remodeled the project, will use bevy as client (both web and app) and an axum server as back-end">
       <option name="closed" value="true" />
