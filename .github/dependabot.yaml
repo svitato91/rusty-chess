@@ -1,0 +1,10 @@
+version: 2
+updates:
+  - package-ecosystem: "cargo"
+    directories:
+      - "/"
+    ignore:
+      - dependency-name: ""
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 0
