@@ -7,7 +7,7 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82cc94be-b7f7-4061-8037-4987daf8667a" name="Changes" comment="Implemented simple connection between server and client, will be developed into a full game communication">
+    <list default="true" id="82cc94be-b7f7-4061-8037-4987daf8667a" name="Changes" comment="Updated dependencies">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -81,6 +81,7 @@
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;org.rust.cargo.project.model.PROJECT_DISCOVERY&quot;: &quot;true&quot;,
+    &quot;org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon&quot;: &quot;&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;language.rust&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
@@ -195,7 +196,8 @@
       <workItem from="1706734979983" duration="1725000" />
       <workItem from="1706736731207" duration="1715000" />
       <workItem from="1744182824706" duration="37000" />
-      <workItem from="1744182866710" duration="31000" />
+      <workItem from="1744182866710" duration="1299000" />
+      <workItem from="1744207937731" duration="1000" />
     </task>
     <task id="LOCAL-00001" summary="Fully remodeled the project, will use bevy as client (both web and app) and an axum server as back-end">
       <option name="closed" value="true" />
@@ -213,7 +215,15 @@
       <option name="project" value="LOCAL" />
       <updated>1706650660594</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Updated dependencies">
+      <option name="closed" value="true" />
+      <created>1744183057781</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1744183057781</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -233,6 +243,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Fully remodeled the project, will use bevy as client (both web and app) and an axum server as back-end" />
     <MESSAGE value="Implemented simple connection between server and client, will be developed into a full game communication" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented simple connection between server and client, will be developed into a full game communication" />
+    <MESSAGE value="Updated dependencies" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated dependencies" />
   </component>
 </project>
