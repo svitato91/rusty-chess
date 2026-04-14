@@ -12,7 +12,7 @@ axum = { version = "0.7", features = ["ws"] }
 env_logger = "0.11"
 dashmap = "5"
 log = "0.4"
-rand = "0.8"
+rand = "0.9"
 serde = { workspace = true, features = ["derive"] }
 shared = { path = "../shared" }
 thiserror = "1"
